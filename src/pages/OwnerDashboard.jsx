@@ -176,20 +176,29 @@ export default function OwnerDashboard() {
       )}
 
       {/* Dashboard statistics */}
-      <section className="dashboard-stats">
+      <section className="dashboard-stats" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
         <div className="stat-card">
           <span>Parking Facilities</span>
           <strong>{loadingLots ? "..." : lots.length}</strong>
+          <small style={{ color: "var(--muted)", fontSize: "12px" }}>Locations registered</small>
+        </div>
+
+        <div className="stat-card">
+          <span>Total Slot Capacity</span>
+          <strong>{loadingLots ? "..." : lots.reduce((acc, l) => acc + (Number(l.totalSlots) || 0), 0)}</strong>
+          <small style={{ color: "var(--muted)", fontSize: "12px" }}>Slots under management</small>
         </div>
 
         <div className="stat-card">
           <span>Bookings Loaded</span>
           <strong>{loadingBookings ? "..." : bookings.length}</strong>
+          <small style={{ color: "var(--muted)", fontSize: "12px" }}>Driver reservations</small>
         </div>
 
         <div className="stat-card">
-          <span>Owner Account</span>
-          <strong>Active</strong>
+          <span>Facility Status</span>
+          <strong style={{ color: "var(--success)" }}>Active & Open</strong>
+          <small style={{ color: "var(--muted)", fontSize: "12px" }}>Verified owner</small>
         </div>
       </section>
 

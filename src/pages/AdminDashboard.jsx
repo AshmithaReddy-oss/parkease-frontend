@@ -67,20 +67,29 @@ export default function AdminDashboard() {
 
       {success && <div className="alert alert-success">{success}</div>}
 
-      <section className="dashboard-stats">
+      <section className="dashboard-stats" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
         <div className="stat-card">
           <span>Registered Users</span>
           <strong>{users.length}</strong>
+          <small style={{ color: "var(--muted)", fontSize: "12px" }}>Platform accounts</small>
         </div>
 
         <div className="stat-card">
           <span>Parking Facilities</span>
           <strong>{lots.length}</strong>
+          <small style={{ color: "var(--muted)", fontSize: "12px" }}>Total locations</small>
         </div>
 
         <div className="stat-card">
           <span>Total Bookings</span>
           <strong>{bookings.length}</strong>
+          <small style={{ color: "var(--muted)", fontSize: "12px" }}>System reservations</small>
+        </div>
+
+        <div className="stat-card">
+          <span>System Status</span>
+          <strong style={{ color: "var(--success)" }}>Online 🟢</strong>
+          <small style={{ color: "var(--muted)", fontSize: "12px" }}>API & Database UP</small>
         </div>
       </section>
 

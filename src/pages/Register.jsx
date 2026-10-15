@@ -36,9 +36,17 @@ export default function Register() {
     setLoading(true);
 
     try {
+      const payload = {
+        name: form.name.trim(),
+        email: form.email.trim(),
+        password: form.password,
+        phone: form.phone.trim() || undefined,
+        role: form.role,
+      };
+
       const response = await api.post(
         "/auth/register",
-        form
+        payload
       );
 
       const data = response.data;
@@ -55,6 +63,9 @@ export default function Register() {
             role: data.role,
           })
         );
+
+        // Notify Navbar and active tabs of new authentication session
+        window.dispatchEvent(new Event("storage"));
 
         const role = data.role;
 

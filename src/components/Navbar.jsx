@@ -1,21 +1,37 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const token = localStorage.getItem("token");
+  const [auth, setAuth] = useState(() => ({
+    token: localStorage.getItem("token"),
+    user: JSON.parse(localStorage.getItem("user") || "null"),
+  }));
 
-  const user = JSON.parse(
-    localStorage.getItem("user") || "null"
-  );
+  useEffect(() => {
+    function syncAuth() {
+      setAuth({
+        token: localStorage.getItem("token"),
+        user: JSON.parse(localStorage.getItem("user") || "null"),
+      });
+    }
+
+    syncAuth();
+    window.addEventListener("storage", syncAuth);
+    return () => window.removeEventListener("storage", syncAuth);
+  }, [location.pathname]);
 
   function logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-
+    setAuth({ token: null, user: null });
+    window.dispatchEvent(new Event("storage"));
     navigate("/login");
   }
 
+  const { token, user } = auth;
   const role = user?.role;
 
   return (
